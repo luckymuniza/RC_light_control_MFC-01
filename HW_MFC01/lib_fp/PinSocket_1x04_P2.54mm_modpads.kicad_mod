@@ -1,0 +1,231 @@
+(footprint "PinSocket_1x04_P2.54mm_modpads"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(descr "Through hole straight socket strip, 1x04, 2.54mm pitch, single row (from Kicad 4.0.7), script generated")
+	(tags "Through hole socket strip THT 1x04 2.54mm single row")
+	(property "Reference" "J20"
+		(at 0 -2.77 0)
+		(layer "F.SilkS")
+		(uuid "8b006ebe-98df-4d14-91f0-267c25188998")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "Conn_01x04_Pin"
+		(at 0 10.39 0)
+		(layer "F.Fab")
+		(uuid "8ba69b00-e720-432f-a37c-a7ebb65f3b23")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "d808cddd-f060-4896-8c63-470e506c371e")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Description" "Generic connector, single row, 01x04, script generated"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "5b4f6984-2204-4129-9092-c91e8c087d53")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "KiLib_Generator" "connector/pin_header_socket"
+		(at 0 0 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "38ff9d1c-76a5-4e51-84d6-6dd6d2f8c57a")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property ki_fp_filters "Connector*:*_1x??_*")
+	(sheetname "/")
+	(sheetfile "HW_MFC01.kicad_sch")
+	(attr through_hole)
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_line
+		(start 0 -1.33)
+		(end 1.33 -1.33)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "3c1896b5-687a-42f3-b7b9-7108481868ec")
+	)
+	(fp_line
+		(start -1.77 -1.77)
+		(end 1.77 -1.77)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "dcf75224-69e4-462f-935b-b641a694a35f")
+	)
+	(fp_line
+		(start -1.77 9.39)
+		(end -1.77 -1.77)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "c92440cd-25a2-464d-85d7-ad91fb487495")
+	)
+	(fp_line
+		(start 1.77 -1.77)
+		(end 1.77 9.39)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "c8ae583e-7a00-488a-8f43-d60144741efc")
+	)
+	(fp_line
+		(start 1.77 9.39)
+		(end -1.77 9.39)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "1c9a4065-8b65-4c43-8857-65e7a1fdd619")
+	)
+	(fp_line
+		(start -1.27 -1.27)
+		(end 0.635 -1.27)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "0735faf8-6802-44a8-a79b-d8c0eaa175ce")
+	)
+	(fp_line
+		(start -1.27 8.89)
+		(end -1.27 -1.27)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "6d18abdf-6dcc-40d9-9574-d15e3451b4de")
+	)
+	(fp_line
+		(start 0.635 -1.27)
+		(end 1.27 -0.635)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "a06584d3-eea8-40f7-b7a3-2cfdbaf44e6f")
+	)
+	(fp_line
+		(start 1.27 -0.635)
+		(end 1.27 8.89)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "baea6353-a4d9-4729-84c1-8b408654a8a8")
+	)
+	(fp_line
+		(start 1.27 8.89)
+		(end -1.27 8.89)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "8f79e4a1-f642-4d27-8589-1004e635834f")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 3.81 90)
+		(layer "F.Fab")
+		(uuid "ca0f8562-4d46-4a53-bb48-9d8506f6e286")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" thru_hole roundrect
+		(at 0 0)
+		(size 3 1.7)
+		(drill 0.8)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(roundrect_rratio 0.1470588235)
+		(uuid "bb02a595-76b7-478f-b7ea-24c336667213")
+	)
+	(pad "2" thru_hole roundrect
+		(at 0 2.54)
+		(size 3 1.7)
+		(drill 0.8)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(roundrect_rratio 0.08333333333)
+		(thermal_bridge_angle 45)
+		(uuid "4a11148c-6675-426b-b7b8-dbcbdb11b409")
+	)
+	(pad "3" thru_hole roundrect
+		(at 0 5.08)
+		(size 3 1.7)
+		(drill 0.8)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(roundrect_rratio 0.08333333333)
+		(thermal_bridge_angle 45)
+		(uuid "c9267367-a09d-496e-a3f3-f4795777e1c0")
+	)
+	(pad "4" thru_hole roundrect
+		(at 0 7.62)
+		(size 3 1.7)
+		(drill 0.8)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(roundrect_rratio 0.08333333333)
+		(thermal_bridge_angle 45)
+		(uuid "86d7ec5a-1dc6-4961-a024-c202878c304e")
+	)
+	(embedded_fonts no)
+	(model "${KICAD10_3DMODEL_DIR}/Connector_PinSocket_2.54mm.3dshapes/PinSocket_1x04_P2.54mm_Vertical.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)
