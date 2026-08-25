@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "ibus.h"
-#include"rear_light.h"
+#include"lights.h"
 #include "turn_light.h"
 #include "to_mfc.h"
 
@@ -40,32 +40,27 @@ int main(void) {
     gpio_put(LED_PIN,1);
 
 
-    //init iBUS uart
+    //init iBUS
     ibus_init();
     while (!ibus_data_valid()) {
         ibus_service();
     }
-    //rear_light_init();
-
     to_mfc_init();
-    //turn_light_init();
+    lights_init();
+    turn_light_init();
 
     while(1) {
         //****************************************
         //              zadne svetla
         //****************************************
-    //    rear_light_service();
+        light_service();
 
         //****************************************
         //              smerovky
         //****************************************
-    //    turn_light_service();
+        turn_light_service();
 
         //beacon
-
-        //to mfc
-        to_mfc_service();
-
 
     } //while 1
 

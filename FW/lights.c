@@ -2,7 +2,7 @@
 // Created by all on 16. 12. 2025.
 //
 
-#include "rear_light.h"
+#include "lights.h"
 
 #include <stdio.h>
 
@@ -11,8 +11,10 @@
 #include "hardware/pwm.h"
 
 
-#define REAR_LIGHT_OUT_PWM_PIN 10    //slice 5 A
-#define REAR_LIGHT_19_IN_PIN 26  //ADC0
+#define REAR_LIGHT_OUT_PWM_PIN 8
+#define REAR_LIGHT_IN_PIN 26  //ADC0
+#define HEAD_LIGHTS_OUT_PIN 12
+#define SIDE_LIGHTS_OUT_PIN 10
 
 //vstupne urovne signalu pre zadne svetlo
 //#define REAR_LIGHT_OFF_LEVEL 3000
@@ -40,6 +42,7 @@ inline void rear_light_on (void){
         pwm_set_chan_level(pwm_slice_num_rearlight, pwm_chan_num_rearlight, REAR_LIGHT_ON_PWM_LEVEL); //vypnute
     }
     rear_light_is_on = true;
+
 }
 inline void rear_light_off (void){
     if (brake_light_is_on == false) {
@@ -49,6 +52,7 @@ inline void rear_light_off (void){
 }
 static void rear_light_brake_on (void){
     pwm_set_chan_level(pwm_slice_num_rearlight, pwm_chan_num_rearlight, REAR_LIGHT_BRAKE_PWM_LEVEL); //vypnute
+    brake_light_is_on = true;
 }
 
 
@@ -71,7 +75,12 @@ static inline uint32_t my_adc_get_data(void) {
 }
 
 
-void rear_light_init(void) {
+void lights_init(void) {
+    //side and head lights
+    gpio_set_function_masked((1<<HEAD_LIGHTS_OUT_PIN) | (1<<SIDE_LIGHTS_OUT_PIN),GPIO_FUNC_SIO);
+    gpio_set_dir_out_masked((1<<HEAD_LIGHTS_OUT_PIN) | (1<<SIDE_LIGHTS_OUT_PIN));
+    gpio_put_masked((1<<HEAD_LIGHTS_OUT_PIN) | (1<<SIDE_LIGHTS_OUT_PIN),0);
+
     //ADC init for rearlight
     //init PWM pins
     gpio_set_function_masked(
@@ -91,13 +100,13 @@ void rear_light_init(void) {
     rear_light_off(); //vypnute
 
     adc_init();
-    adc_gpio_init(REAR_LIGHT_19_IN_PIN);
+    adc_gpio_init(REAR_LIGHT_IN_PIN);
     adc_select_input(0);
     my_adc_start_conversion();
 
 }
 //len zapne brzdy ak su
-void rear_light_service(void) {
+void light_service(void) {
     uint32_t tmp = my_adc_get_data();
     //printf("Rear Light: %u\n", tmp);
     if (tmp < REAR_LIGHT_BRAKE_LEVEL) {
@@ -119,7 +128,7 @@ void rear_light_service(void) {
 
 
 /*
-void rear_light_service(void) {
+void light_service(void) {
     uint32_t tmp = my_adc_get_data();
     if (tmp > REAR_LIGHT_OFF_LEVEL) {
         //zhasni svetla

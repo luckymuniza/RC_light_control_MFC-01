@@ -9,7 +9,6 @@
 
 
 void to_mfc_init(void);
-void to_mfc_service(void);
 
 
 #endif //TO_MFC_H

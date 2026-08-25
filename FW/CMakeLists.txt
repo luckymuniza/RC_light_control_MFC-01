@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.12)
 # Pull in SDK (must be before project)
 include(pico_sdk_import.cmake)
 
-project(rc_car_control C CXX ASM)
+project(rc_light_control_MFC-01 C CXX ASM)
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
@@ -29,7 +29,7 @@ set(TRGT tatra_lighting)
 add_executable(${TRGT} main.c
         turn_light.c
         ibus.c
-        rear_light.c
+        lights.c
         to_mfc.c
 )
 

@@ -11,11 +11,12 @@ fp-info-cache
 # CLion / JetBrains
 .idea/
 cmake-build-*/
-build*/
+build/
 
 #DOC
 #doc/
 *.cdr
+
 
 backup/
 
