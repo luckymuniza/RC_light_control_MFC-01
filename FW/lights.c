@@ -82,7 +82,7 @@ void lights_init(void) {
     gpio_put_masked((1<<HEAD_LIGHTS_OUT_PIN) | (1<<SIDE_LIGHTS_OUT_PIN),0);
 
     //ADC init for rearlight
-    //init PWM pins
+    //init PWM pins2
     gpio_set_function_masked(
         (1<<REAR_LIGHT_OUT_PWM_PIN), GPIO_FUNC_PWM);
     pwm_slice_num_rearlight = pwm_gpio_to_slice_num(REAR_LIGHT_OUT_PWM_PIN);
