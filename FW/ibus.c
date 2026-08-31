@@ -6,7 +6,7 @@
 #include "pico/stdlib.h"
 #include "pico/sync.h"
 
-#define DBG
+//#define DBG
 #define RX_SBUS_IN_PIN 9     //UART1 RX
 #define SBUS_NEXT_FRAME_TIMEGAP 3000 //us cca 7ms chodia frame, a jeden trva 32*10*1/115200 = 2.7ms
 
@@ -21,7 +21,7 @@ typedef enum
     IBUS_STATE_CHECK_CRC_HIGH
 }ibus_state;
 
-volatile ibus_state IBUS_rx_state = IBUS_STATE_IDLE;
+static ibus_state IBUS_rx_state = IBUS_STATE_IDLE;
 volatile bool IBUS_data_received = false;
 static volatile uint32_t time_next;
 volatile uint16_t channel_data[14];

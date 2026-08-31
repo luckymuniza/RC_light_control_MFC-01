@@ -16,12 +16,12 @@ typedef enum
     IBUS_CHAN_LIGHTS_MFC = (2-1),
     IBUS_CHAN_THROTTLE = (3-1),
     IBUS_CHAN_THROTTLE_X = (4-1),
-    IBUS_CHAN_MODE_SW = (5-1),
+    IBUS_CHAN_GEAR_SW = (5-1),
     IBUS_CHAN_BEACON_SW = (6-1),
-    IBUS_CHAN_GEAR_SW = (7-1),
-    IBUS_CHAN_LIGHTS_SW = (8-1),
-    IBUS_CHAN_POT_A = (9-1),
-    IBUS_CHAN_POT_B = (10-1)
+    IBUS_CHAN_LIGHTS_SW = (7-1),
+    //IBUS_CHAN_LIGHTS_SW = (8-1),
+    //IBUS_CHAN_POT_A = (9-1),
+    //IBUS_CHAN_POT_B = (10-1)
 } ibus_channel;
 
 void ibus_init(void);

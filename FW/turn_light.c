@@ -32,8 +32,8 @@ static uint pwm_chan_num_turn_light_R;
 
 
 static uint32_t turn_light_prev_state = TURN_LIGHT_L_MASK | TURN_LIGHT_R_MASK;  //L=1, R=1 - off
-static volatile bool turn_light_L_is_on = false;
-static volatile bool turn_light_R_is_on = false;
+static bool turn_light_L_is_on = false;
+static bool turn_light_R_is_on = false;
 
 //set turnlight brightness 0...2000
 void turn_light_L_set (uint16_t val) {

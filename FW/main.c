@@ -1,15 +1,12 @@
 
 #include <stdio.h>
 #include "pico/stdlib.h"
-//#include "pico/stdio.h"
-#include "hardware/clocks.h"
-#include "hardware/pwm.h"
-#include <stdlib.h>
 #include <time.h>
 #include "ibus.h"
 #include"lights.h"
 #include "turn_light.h"
 #include "to_mfc.h"
+#include "beacon.h"
 
 #define DBG
 
@@ -48,19 +45,25 @@ int main(void) {
     to_mfc_init();
     lights_init();
     turn_light_init();
+    beacon_init();
 
     while(1) {
+        ibus_service();
+
         //****************************************
-        //              zadne svetla
+        //              lights + rear light
         //****************************************
         light_service();
 
         //****************************************
-        //              smerovky
+        //              turn_lights
         //****************************************
         turn_light_service();
 
-        //beacon
+        //****************************************
+        //              beacons
+        //****************************************
+        beacon_service();
 
     } //while 1
 

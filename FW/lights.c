@@ -3,9 +3,8 @@
 //
 
 #include "lights.h"
-
-#include <stdio.h>
-
+#include "pico/stdlib.h"
+#include "ibus.h"
 #include "stdlib.h"
 #include "hardware/adc.h"
 #include "hardware/pwm.h"
@@ -16,7 +15,7 @@
 #define HEAD_LIGHTS_OUT_PIN 12
 #define SIDE_LIGHTS_OUT_PIN 10
 
-//vstupne urovne signalu pre zadne svetlo
+//input levels for brake lights
 //#define REAR_LIGHT_OFF_LEVEL 3000
 //#define REAR_LIGHT_ON_LEVEL 1500
 #define REAR_LIGHT_BRAKE_LEVEL 2000    //1600 brzdy,   2250 svetla
@@ -24,6 +23,8 @@
 #define REAR_LIGHT_OFF_PWM_LEVEL 0 //0-2000
 #define REAR_LIGHT_ON_PWM_LEVEL 500 //0-2000
 #define REAR_LIGHT_BRAKE_PWM_LEVEL 2000 //0-2000
+
+#define LIGHTS_SW_LEVEL 1500 // switch value for lights ON/OFF
 
 uint pwm_slice_num_rearlight;  //slice
 uint pwm_chan_num_rearlight;  //channel A/B
@@ -36,30 +37,40 @@ static inline void my_adc_start_conversion(void) {
 }
 
 
-//zapnut,vypny, brzdy zadne svetlo.
+//lights and brake lights.
 inline void rear_light_on (void){
     if (brake_light_is_on == false) {
-        pwm_set_chan_level(pwm_slice_num_rearlight, pwm_chan_num_rearlight, REAR_LIGHT_ON_PWM_LEVEL); //vypnute
+        pwm_set_chan_level(pwm_slice_num_rearlight, pwm_chan_num_rearlight, REAR_LIGHT_ON_PWM_LEVEL); //ON
     }
     rear_light_is_on = true;
 
 }
 inline void rear_light_off (void){
     if (brake_light_is_on == false) {
-        pwm_set_chan_level(pwm_slice_num_rearlight, pwm_chan_num_rearlight, REAR_LIGHT_OFF_PWM_LEVEL); //vypnute
+        pwm_set_chan_level(pwm_slice_num_rearlight, pwm_chan_num_rearlight, REAR_LIGHT_OFF_PWM_LEVEL); //OFF
     }
     rear_light_is_on = false;
 }
 static void rear_light_brake_on (void){
-    pwm_set_chan_level(pwm_slice_num_rearlight, pwm_chan_num_rearlight, REAR_LIGHT_BRAKE_PWM_LEVEL); //vypnute
+    pwm_set_chan_level(pwm_slice_num_rearlight, pwm_chan_num_rearlight, REAR_LIGHT_BRAKE_PWM_LEVEL); //Brakes ON
     brake_light_is_on = true;
+}
+static void rear_light_brake_off (void){
+    if (rear_light_is_on) {
+        pwm_set_chan_level(pwm_slice_num_rearlight, pwm_chan_num_rearlight, REAR_LIGHT_ON_PWM_LEVEL); //Rear lifghts ON
+    }
+    else {
+        pwm_set_chan_level(pwm_slice_num_rearlight, pwm_chan_num_rearlight, REAR_LIGHT_OFF_PWM_LEVEL); //rear lights OFF
+    }
+    brake_light_is_on = false;
+
+
 }
 
 
 
-
-//plavajuci priemer /32
-static inline uint32_t my_adc_get_data(void) {
+//Moving average /32
+static uint32_t my_adc_get_data(void) {
     static uint16_t buf[32] = {0};
     static uint8_t idx = 0; //kde sa ma prave zapisat
     static uint32_t sum = 0;
@@ -81,7 +92,7 @@ void lights_init(void) {
     gpio_set_dir_out_masked((1<<HEAD_LIGHTS_OUT_PIN) | (1<<SIDE_LIGHTS_OUT_PIN));
     gpio_put_masked((1<<HEAD_LIGHTS_OUT_PIN) | (1<<SIDE_LIGHTS_OUT_PIN),0);
 
-    //ADC init for rearlight
+
     //init PWM pins2
     gpio_set_function_masked(
         (1<<REAR_LIGHT_OUT_PWM_PIN), GPIO_FUNC_PWM);
@@ -99,48 +110,40 @@ void lights_init(void) {
     pwm_init(pwm_slice_num_rearlight, &c, true);
     rear_light_off(); //vypnute
 
+    //ADC init for rearlight
     adc_init();
     adc_gpio_init(REAR_LIGHT_IN_PIN);
     adc_select_input(0);
     my_adc_start_conversion();
-
 }
-//len zapne brzdy ak su
+
+
+
 void light_service(void) {
+
+    //brakes lights service
     uint32_t tmp = my_adc_get_data();
     //printf("Rear Light: %u\n", tmp);
     if (tmp < REAR_LIGHT_BRAKE_LEVEL) {
-        //brzdy on
+        //brakes on
         rear_light_brake_on();
-        brake_light_is_on = true;
     }
     else {
-        brake_light_is_on = false;
-        if (rear_light_is_on) {
-            //zapni svetla
-            rear_light_on();
-        }
-        else {
-            rear_light_off();
-        }
+        //brakes off
+        rear_light_brake_off();
+    }
+    //lights service
+
+    if (ibus_get_channel(IBUS_CHAN_LIGHTS_SW) > LIGHTS_SW_LEVEL) {
+        //lights on
+        rear_light_on();
+        gpio_put(HEAD_LIGHTS_OUT_PIN,1);
+        gpio_put(SIDE_LIGHTS_OUT_PIN,1);
+    }
+    else {
+        //lights off
+        rear_light_off();
+        gpio_put(HEAD_LIGHTS_OUT_PIN,0);
+        gpio_put(SIDE_LIGHTS_OUT_PIN,0);
     }
 }
-
-
-/*
-void light_service(void) {
-    uint32_t tmp = my_adc_get_data();
-    if (tmp > REAR_LIGHT_OFF_LEVEL) {
-        //zhasni svetla
-        rearlight_off();
-    }
-    else if ((tmp < REAR_LIGHT_ON_LEVEL) && (tmp > REAR_LIGHT_BRAKE_LEVEL)) {
-        //zapni svetla
-        rearlight_on();
-    }
-    else if (tmp < REAR_LIGHT_BRAKE_LEVEL){
-        //zapni brzdov
-        rearlight_brake_on();
-    }
-}
-*/

@@ -31,6 +31,8 @@ add_executable(${TRGT} main.c
         ibus.c
         lights.c
         to_mfc.c
+        beacon.c
+        beacon.h
 )
 
 # pull in common dependencies
