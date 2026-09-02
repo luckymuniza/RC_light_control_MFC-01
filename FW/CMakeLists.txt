@@ -20,7 +20,11 @@ endif()
 
 # Initialize the SDK
 #set(pioasm_DIR "f:/_Work/Programing/rpi/pioasm")
-set(picotool_DIR "f:/_work/_Programing/rpi/picotool")
+if (DEFINED ENV{PICOTOOL_PATH})
+    set(picotool_DIR $ENV{PICOTOOL_PATH})
+else()
+    set(picotool_DIR "f:/_work/_Programing/rpi/picotool")
+endif()
 pico_sdk_init()
 
 #targetname
